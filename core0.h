@@ -1,3 +1,7 @@
+#include "camera_pins.h"
+#include "esp32_pins.h"
+#include <Wire.h>
+
 TaskHandle_t hCore0task;
 
 bool debug = 1;
@@ -24,11 +28,11 @@ void core0setup() {  // a.k.a. setup
 void core0task(void* parameter) {  // a.k.a. loop
   for (;;) {                       // the loop
     if (firstRunCore0) {
-      Wire.begin(i2cSDA, i2cSCL, 400000);
+      Wire.begin(SDA, CLK, 400000);
       byte error, address;
       int nDevices;
       s.println("Scanning I2C");
-      s.println("BME280              0x77");
+      s.println("MLX     0x33");
       s.println("");
       nDevices = 0;
       for (address = 1; address < 127; address++) {
